@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wake Lock with Spinner Animation</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #222;
+            color: #0f0;
+            font-size: 2rem;
+            font-family: "Arial", monospace;
+        }
+    </style>
+</head>
+<body>
+    <div id="spinner">|</div>
+    <script>
+        // Wake Lock APIの設定
+        let wakeLock = null;
+
+        async function requestWakeLock() {
+            try {
+                wakeLock = await navigator.wakeLock.request('screen');
+                console.log('Wake Lock is active');
+
+                wakeLock.addEventListener('release', () => {
+                    console.log('Wake Lock was released');
+                });
+            } catch (err) {
+                console.error(`Wake Lock request failed: ${err.name}, ${err.message}`);
+            }
+        }
+
+        requestWakeLock();
+
+        // スピナーアニメーションの設定
+        const spinnerElement = document.getElementById('spinner');
+        const spinnerSymbols = ['|', '/', '-', '\\'];
+        let spinnerIndex = 0;
+
+        function updateSpinner() {
+            spinnerElement.textContent = spinnerSymbols[spinnerIndex];
+            spinnerIndex = (spinnerIndex + 1) % spinnerSymbols.length;
+        }
+
+        // アニメーションを200msごとに更新
+        setInterval(updateSpinner, 200);
+    </script>
+</body>
+</html>
