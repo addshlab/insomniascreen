@@ -13,12 +13,12 @@
             background-color: #222;
             color: #0f0;
             font-size: 2rem;
-            font-family: "Arial", monospace;
+            font-family: monospace;
         }
     </style>
 </head>
 <body>
-    <div id="spinner">|</div>
+    <div id="clock"></div>
     <script>
         // Wake Lock APIの設定
         let wakeLock = null;
@@ -38,18 +38,25 @@
 
         requestWakeLock();
 
-        // スピナーアニメーションの設定
-        const spinnerElement = document.getElementById('spinner');
-        const spinnerSymbols = ['|', '/', '-', '\\'];
-        let spinnerIndex = 0;
+        // 日時表示の設定
+        const clockElement = document.getElementById('clock');
 
-        function updateSpinner() {
-            spinnerElement.textContent = spinnerSymbols[spinnerIndex];
-            spinnerIndex = (spinnerIndex + 1) % spinnerSymbols.length;
+        function updateClock() {
+            const now = new Date();
+            const year = now.getFullYear();
+            const month = String(now.getMonth() + 1).padStart(2, '0');
+            const day = String(now.getDate()).padStart(2, '0');
+            const hours = String(now.getHours()).padStart(2, '0');
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            const seconds = String(now.getSeconds()).padStart(2, '0');
+
+            const formattedTime = `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+            clockElement.textContent = formattedTime;
         }
 
-        // アニメーションを200msごとに更新
-        setInterval(updateSpinner, 200);
+        // 1秒ごとに時刻を更新
+        setInterval(updateClock, 1000);
+        updateClock(); // 初回表示のためすぐに呼び出す
     </script>
 </body>
 </html>
