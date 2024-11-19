@@ -5,7 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>insomnia screen</title>
     <style>
-        body {
+        body{margin:0;padding:0;}
+        #app{margin:10px;}
+        #clock{
             display: flex;
             justify-content: center;
             align-items: center;
@@ -18,7 +20,9 @@
     </style>
 </head>
 <body>
+<div id="app">
     <div id="clock"></div>
+</div>
     <script>
         // Wake Lock APIの設定
         let wakeLock = null;
